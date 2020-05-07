@@ -1,0 +1,2 @@
+rootProject.name='Crowd Control'
+include ':app'

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Crowd Control</string>
+    <string name="splash_desc">AI based</string>
+    <string name="splash_title">SHOPPING</string>
 </resources>

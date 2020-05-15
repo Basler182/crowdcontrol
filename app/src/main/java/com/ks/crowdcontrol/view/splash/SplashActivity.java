@@ -1,4 +1,4 @@
-package com.ks.crowdcontrol;
+package com.ks.crowdcontrol.view.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ks.crowdcontrol.MainActivity;
+import com.ks.crowdcontrol.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,6 +40,11 @@ public class SplashActivity extends AppCompatActivity {
         image.setAnimation(topAnim);
         logo.setAnimation(bottomAnim);
         slogan.setAnimation(bottomAnim);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
         //Starts Main Activity
         new Timer().schedule(new TimerTask() {
             public void run() {

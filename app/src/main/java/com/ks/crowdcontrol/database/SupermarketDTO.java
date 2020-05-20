@@ -9,6 +9,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.ks.crowdcontrol.R;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import lombok.Data;
@@ -34,6 +35,8 @@ public class SupermarketDTO {
     private double latitude, longitude;
     //Supermarket Type
     private Type type;
+    //Map for the Chart
+    private Map<Integer, Integer> chartMap;
 
     public SupermarketDTO(String random){
         this.id = "1";

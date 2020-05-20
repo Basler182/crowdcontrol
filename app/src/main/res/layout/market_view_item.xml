@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="25dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal_center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <TextView
+        android:id="@+id/supermarket_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/supermarket_client_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Anne-Marie Muster"
+        android:lines="1"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@id/supermarket_id"
+        app:layout_constraintEnd_toStartOf="@id/supermarket_icon"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_center" />
+
+    <TextView
+        android:id="@+id/supermarket_client_address"
+        android:layout_width="0dp"
+        android:textSize="10sp"
+        android:layout_height="wrap_content"
+        android:text="Oster-Sommer-Straße 15"
+        android:lines="1"
+        app:layout_constraintStart_toEndOf="@id/supermarket_id"
+        app:layout_constraintEnd_toStartOf="@id/supermarket_icon"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_center" />
+
+    <ImageView
+        android:id="@+id/supermarket_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tintMode="src_in"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/supermarket_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

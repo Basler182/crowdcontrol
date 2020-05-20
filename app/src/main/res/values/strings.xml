@@ -2,4 +2,12 @@
     <string name="app_name">Crowd Control</string>
     <string name="splash_desc">AI based</string>
     <string name="splash_title">SHOPPING</string>
+    <string name="main_informations_btn">Informationen</string>
+    <string name="main_shopping_list_btn">Meine Einkaufsliste</string>
+    <string name="main_supermarkets_btn">Supermärkte in der Nähe</string>
+    <string name="main_title">Welcome to Crowd Control</string>
+    <string name="order_urgency_urgent">URGENCY</string>
+    <string name="order_title_groceries">groceries</string>
+    <string name="information_dialog_text">Crowd Control ist ein Projekt von Kilian, Raphael und Huynh, welches im Rahmen von Datenverarbeitung in der Technik an der OTH Regensburg entstanden ist.</string>
+    <string name="information_dialog_positive_button">Verstanden!</string>
 </resources>

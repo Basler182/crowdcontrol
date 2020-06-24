@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.ks.crowdcontrol.database.SupermarketDTO;
 import com.ks.crowdcontrol.view.main.Fragment_0_Home;
 import com.ks.crowdcontrol.view.main.Fragment_1_Map;
@@ -22,10 +23,12 @@ import lombok.Data;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    public static FirebaseAuth mAuth;
     private SectionsStatePagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager;
 
     private SupermarketDTO currentSupermarketDTO = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.container);
         //setup the pager
         setupViewPager(mViewPager);
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword("test@test.de", "123456");
+
     }
 
     private void setupViewPager(ViewPager viewPager){

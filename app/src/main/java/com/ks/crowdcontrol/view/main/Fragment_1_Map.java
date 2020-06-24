@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -33,6 +34,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -50,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -133,7 +140,11 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+
+        FirebaseUser currentUser = MainActivity.mAuth.getCurrentUser();
+        if (currentUser != null) {
+            initData();
+        }
     }
 
     @Override
@@ -156,6 +167,7 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
 
     private void initData() {
         supermarketDTOList.clear();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -187,8 +199,8 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
     @Override
     public void onSupermarketClicked(String supermarketID) {
         SupermarketDTO supermarket = null;
-        for(SupermarketDTO temp : supermarketDTOList){
-            if(temp.getId().equals(supermarketID)){
+        for (SupermarketDTO temp : supermarketDTOList) {
+            if (temp.getId().equals(supermarketID)) {
                 supermarket = temp;
             }
         }
@@ -200,6 +212,9 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
      * Request the last known location and zoom the map to that point.
      */
     private void requestCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(location -> {
                     this.location = location;

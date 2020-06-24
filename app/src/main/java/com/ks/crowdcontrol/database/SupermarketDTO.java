@@ -62,6 +62,8 @@ public class SupermarketDTO {
         staticListID++;
         //Name of supermarket
         name = documentSnapshot.getString("name");
+        //Chart Map
+        chartMap = (Map<Integer, Integer>) documentSnapshot.getData().get("chartmap");
         //Address
         HashMap addressMap = (HashMap) Objects.requireNonNull(documentSnapshot.getData()).get("address");
         assert addressMap != null;

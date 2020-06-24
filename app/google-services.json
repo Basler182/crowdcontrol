@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "704355794696-d3s6t8oq7mcpbbkm6fec123vhdtovnh1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ks.crowdcontrol",
+            "certificate_hash": "65e107a1fd893e75e13ab0d64bf5e397ad13e7f6"
+          }
+        },
+        {
           "client_id": "704355794696-gdejvcmvnni4lttgdjgajhjkut6pgk3p.apps.googleusercontent.com",
           "client_type": 3
         }

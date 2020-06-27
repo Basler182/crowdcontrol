@@ -53,7 +53,7 @@ public class Fragment_3_Details extends Fragment {
             ((MainActivity) Objects.requireNonNull(getActivity())).setViewPager(1);
         });
         currentSupermarketDTO = ((MainActivity) Objects.requireNonNull(getActivity())).getSupermarketDetailsID();
-        if(currentSupermarketDTO != null) {
+        if (currentSupermarketDTO != null) {
             //Text View Setup
             TVPersonCount.setText(new StringBuilder().append(currentSupermarketDTO.getCurrent_customers()).append("/").append(currentSupermarketDTO.getMax_customers()).append(" möglichen Kunden").toString());
             if (currentSupermarketDTO.getCurrent_customers() < currentSupermarketDTO.getMax_customers()) {
@@ -66,27 +66,28 @@ public class Fragment_3_Details extends Fragment {
             //Chart Setup
             List<Entry> entries = new ArrayList<>();
             //Map which contains Data from Supermarket
-            Map<Integer, Integer> map = new HashMap<>();
-            map.put(5,3);
-            map.put(7,6);
-            map.put(8,12);
-            map.put(13,19);
-            map.put(14,12);
-            for(Integer key : map.keySet()){
-                System.out.println("key : " + key);
-                System.out.println("value : " + map.get(key));
+            int[] myNum = new int[24];
+            ArrayList testArray= currentSupermarketDTO.getChartData();
+            int count = 0;
+            for(Object num : testArray){
+                myNum[count] = Integer.parseInt(num.toString());
+                count++;
             }
-            entries.add(new Entry(5, 5));
-            entries.add(new Entry(10, 10));
-            entries.add(new Entry(12, 15));
-            entries.add(new Entry(22, 18));
+
+            Log.wtf("SupermarketDTO", currentSupermarketDTO.toString());
+
+            for (int i = 0; i < 24; i++) {
+                if (myNum[i] != 0)
+                    entries.add(new Entry(i, myNum[i]));
+            }
+
             LineDataSet dataSet = new LineDataSet(entries, currentSupermarketDTO.getName());
             dataSet.setColor(Color.BLUE);
             dataSet.setValueTextColor(Color.BLACK);
             LineData lineData = new LineData(dataSet);
             chart.setData(lineData);
             chart.invalidate();
-        }else{
+        } else {
             Toast.makeText(getContext(), "No Supermarket available", Toast.LENGTH_SHORT).show();
         }
         return view;

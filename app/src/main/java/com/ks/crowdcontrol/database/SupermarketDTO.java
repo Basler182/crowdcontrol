@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.GeoPoint;
 import com.ks.crowdcontrol.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class SupermarketDTO {
     //Supermarket Type
     private Type type;
     //Map for the Chart
-    private Map<Integer, Integer> chartMap;
+    private ArrayList chartData;
 
     public SupermarketDTO(String random){
         this.id = "1";
@@ -56,6 +57,118 @@ public class SupermarketDTO {
         this.type = Type.GROCERIES;
     }
 
+    public static int getStaticListID() {
+        return staticListID;
+    }
+
+    public static void setStaticListID(int staticListID) {
+        SupermarketDTO.staticListID = staticListID;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getListId() {
+        return listId;
+    }
+
+    public void setListId(String listId) {
+        this.listId = listId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public int getCurrent_customers() {
+        return current_customers;
+    }
+
+    public void setCurrent_customers(int current_customers) {
+        this.current_customers = current_customers;
+    }
+
+    public int getMax_customers() {
+        return max_customers;
+    }
+
+    public void setMax_customers(int max_customers) {
+        this.max_customers = max_customers;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public ArrayList getChartData() {
+        return chartData;
+    }
+
+    public void setChartData(ArrayList chartData) {
+        this.chartData = chartData;
+    }
+
     public SupermarketDTO(DocumentSnapshot documentSnapshot){
         id = documentSnapshot.getId();
         listId = String.valueOf(staticListID);
@@ -63,14 +176,14 @@ public class SupermarketDTO {
         //Name of supermarket
         name = documentSnapshot.getString("name");
         //Chart Map
-        chartMap = (Map<Integer, Integer>) documentSnapshot.getData().get("chartmap");
+        chartData = (ArrayList) Objects.requireNonNull(documentSnapshot.getData()).get("chartData");
         //Address
         HashMap addressMap = (HashMap) Objects.requireNonNull(documentSnapshot.getData()).get("address");
         assert addressMap != null;
         street = (String) addressMap.get("street");
-        houseNumber = (String) addressMap.get("houseNumber");
+        houseNumber = (String) Objects.requireNonNull(addressMap.get("houseNumber")).toString();
         city = (String) addressMap.get("city");
-        zipCode = (String) addressMap.get("zipCode");
+        zipCode = (String) Objects.requireNonNull(addressMap.get("zipCode")).toString();
         //Location
         HashMap locationMap = (HashMap) documentSnapshot.getData().get("gps");
         assert locationMap != null;

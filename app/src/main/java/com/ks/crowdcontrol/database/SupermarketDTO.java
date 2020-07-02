@@ -10,11 +10,14 @@ import com.ks.crowdcontrol.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import lombok.Data;
 
+
+/**
+ * Data Transfer Object of the Supermarkets.
+ */
 @Data
 public class SupermarketDTO {
     private static int staticListID= 1;
@@ -34,36 +37,11 @@ public class SupermarketDTO {
     private int max_customers;
     //Coordinates of the supermarket
     private double latitude, longitude;
-    //Supermarket Type
+    //Supermarket Type means if its a supermarket or medical care shop
     private Type type;
-    //Map for the Chart
+    //ArrayList for the Chart it includes  the AI calculated data
     private ArrayList chartData;
 
-    public SupermarketDTO(String random){
-        this.id = "1";
-        this.listId = "1";
-        this.name = "Aldi Süd";
-        this.street = "Theodor Storm Straße";
-        this.houseNumber ="14";
-        this.city ="Regensburg";
-        this.zipCode = "93051";
-
-        this.current_customers = 10;
-        this.max_customers = 0;
-
-        this.latitude = 49.0;
-        this.longitude = 12.0;
-
-        this.type = Type.GROCERIES;
-    }
-
-    public static int getStaticListID() {
-        return staticListID;
-    }
-
-    public static void setStaticListID(int staticListID) {
-        SupermarketDTO.staticListID = staticListID;
-    }
 
     public String getId() {
         return id;

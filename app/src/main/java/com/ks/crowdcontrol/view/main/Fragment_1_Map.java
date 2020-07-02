@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -34,10 +33,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -56,11 +51,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Executor;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-
+/**
+ * Displays and handles the Map and  Recycler View with the supermarket items
+ */
 public class Fragment_1_Map extends Fragment implements SupermarketAdapter.SuperMarketListener, OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraIdleListener {
     private static final String TAG = "Fragment_Map";
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 100;
@@ -84,7 +80,7 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
 
     /**
      * Asks for the needed permission on start, otherwise we cant access the location of the user.
-     * Is needed to show nearby orders.
+     * Is needed to show nearby supermarkets.
      */
     @Override
     public void onStart() {
@@ -112,13 +108,13 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
         recyclerView = view.findViewById(R.id.supermarket_recycler_view);
         supermarketCountView = view.findViewById(R.id.supermarket_count_text);
 
-        Log.d(TAG, "onCreateView: started.");
-
+        //To get Back to Home View
         btnNavFrag1.setOnClickListener(view1 -> {
             Toast.makeText(getActivity(), "Going to Home", Toast.LENGTH_SHORT).show();
             ((MainActivity) Objects.requireNonNull(getActivity())).setViewPager(0);
         });
 
+        //Creates a map view Bundle and initializes the map on create with it
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
@@ -126,12 +122,13 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
         mapView = view.findViewById(R.id.mapView3);
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
-
         initView();
+        //Places all markers on the map
         initializeMarker();
         if (hasLocationPermission) {
             requestCurrentLocation();
         }
+        //Updates all markers
         updateMarkers();
         return view;
     }
@@ -140,7 +137,7 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //Checks if the app could auth with the firebase and if yes it will init the data
         FirebaseUser currentUser = MainActivity.mAuth.getCurrentUser();
         if (currentUser != null) {
             initData();
@@ -152,11 +149,11 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
 
     }
 
-
+    /*
+    * Initializes the View
+     */
     private void initView() {
 
-
-        //End Test
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         //recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), R.drawable.divider_horizontal));
@@ -165,6 +162,9 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
         supermarketAdapter.notifyDataSetChanged();
     }
 
+    /*
+    * Creates a connection to the database, loads the supermarket data from there and notifies all adapters to display the correct data.
+     */
     private void initData() {
         supermarketDTOList.clear();
 
@@ -196,6 +196,9 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
                 });
     }
 
+    /*
+     * Overrides the on Click Lister on Supermarket Items, so the app will swap to the pressed supermarket.
+     */
     @Override
     public void onSupermarketClicked(String supermarketID) {
         SupermarketDTO supermarket = null;
@@ -208,7 +211,7 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
     }
 
 
-    /**
+    /*
      * Request the last known location and zoom the map to that point.
      */
     private void requestCurrentLocation() {
@@ -235,7 +238,7 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
                 });
     }
 
-    /**
+    /*
      * Sorts List, so that the nearest Orders are on top.
      */
     private void sortDataByDistance(Location myLocation) {
@@ -258,7 +261,9 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
         supermarketAdapter.notifyDataSetChanged();
     }
 
-
+    /*
+    * Loads current Position
+     */
     private Location getMyLocation() {
         LocationManager locationManager = (LocationManager) Objects.requireNonNull(getContext()).getSystemService(LOCATION_SERVICE);
         assert locationManager != null;
@@ -272,7 +277,7 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
         return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     }
 
-    /**
+    /*
      * Once the map is ready, it will jump to the current location.
      */
     @Override
@@ -429,6 +434,9 @@ public class Fragment_1_Map extends Fragment implements SupermarketAdapter.Super
         mapView.onLowMemory();
     }
 
+    /*
+    * If a marker is clicked it will use the supermarket on Click Listener of the Recycler View as well
+     */
     @Override
     public boolean onMarkerClick(Marker marker) {
         String supermarketID = (String) marker.getTag();

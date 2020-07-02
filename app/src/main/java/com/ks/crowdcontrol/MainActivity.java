@@ -1,13 +1,10 @@
 package com.ks.crowdcontrol;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.ks.crowdcontrol.database.SupermarketDTO;
@@ -16,8 +13,6 @@ import com.ks.crowdcontrol.view.main.Fragment_1_Map;
 import com.ks.crowdcontrol.view.main.Fragment_2_Shopping_List;
 import com.ks.crowdcontrol.view.main.Fragment_3_Details;
 import com.ks.crowdcontrol.view.main.adapter.SectionsStatePagerAdapter;
-
-import lombok.Data;
 
 
 public class MainActivity extends AppCompatActivity {

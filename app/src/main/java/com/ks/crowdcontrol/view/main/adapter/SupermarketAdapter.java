@@ -2,7 +2,6 @@ package com.ks.crowdcontrol.view.main.adapter;
 
 import android.content.Context;
 import android.location.Location;
-import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Custom Adapter for the Recycler View to display the Orders.
+ * Custom Adapter for the Recycler View to display the Supermarket Items.
  */
 public class SupermarketAdapter extends RecyclerView.Adapter<SupermarketAdapter.SupermarketHolder> {
     private Context context;
@@ -89,18 +88,11 @@ public class SupermarketAdapter extends RecyclerView.Adapter<SupermarketAdapter.
         void setDetails(SupermarketDTO supermarketDTO, double distance) {
             Context context = view.getContext();
 
-            // Build extras
-            //String typeText = context.getString(order.getType().getTitle());
-
-            //final int urgencyColor = order.getUrgency().getColor(context);
-
             view.setTag(supermarketDTO.getId());
-            //orderId.setTextColor(urgencyColor);
             supermarketID.setText(String.valueOf(supermarketDTO.getListId()));
             supermarketClientAddress.setText(supermarketDTO.getShortAddress());
             supermarketClientName.setText(supermarketDTO.getName());
             supermarketIcon.setImageResource(supermarketDTO.getType().getIcon());
-            //supermarketIcon.setImageTintList(ColorStateList.valueOf(urgencyColor));
             //supermarketDistance.setText(context.getString(R.string.home_order_distance_km, distance));
         }
 
@@ -122,18 +114,7 @@ public class SupermarketAdapter extends RecyclerView.Adapter<SupermarketAdapter.
      * @return The joined elements in a single string.
      */
     private String joinStrings(String delimiter, List<String> strings) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return String.join(delimiter, strings);
-        } else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < strings.size(); i++) {
-                if (i > 0) {
-                    sb.append(", ");
-                }
-                sb.append(strings.get(i));
-            }
-            return sb.toString();
-        }
+        return String.join(delimiter, strings);
     }
 
     public interface SuperMarketListener {

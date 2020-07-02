@@ -22,7 +22,9 @@ import com.ks.crowdcontrol.persistance.shoppinglist.ShoppingListDAO;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
+/**
+ * Class holding the Shopping List Fragment and handling the input.
+ */
 public class Fragment_2_Shopping_List extends Fragment {
     private static final String TAG = "Shopping_List";
 
@@ -40,41 +42,31 @@ public class Fragment_2_Shopping_List extends Fragment {
         mShoppingList.setAdapter(mAdapter);
         Log.d(TAG, "onCreateView: started.");
 
+        //Loads the Shopping List from the shared preferences and adds it to the the adapter to display it
         final ArrayList<String> stringArrayList = ShoppingListDAO.load(getContext());
         for(String temp : stringArrayList) {
             mAdapter.add(temp);
         }
         mAdapter.notifyDataSetChanged();
-
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String item = mItemEdit.getText().toString();
-                mAdapter.add(item);
-                stringArrayList.add(item);
-                mAdapter.notifyDataSetChanged();
-                mItemEdit.setText("");
-                ShoppingListDAO.save(Objects.requireNonNull(getContext()), stringArrayList);
-            }
+        //Adds the Text of the EditText Field to the Adapter and afterwards makes the EditTextView empty and notify the Adapter that Data has changed.
+        btnAdd.setOnClickListener(v -> {
+            String item = mItemEdit.getText().toString();
+            mAdapter.add(item);
+            stringArrayList.add(item);
+            mAdapter.notifyDataSetChanged();
+            mItemEdit.setText("");
+            ShoppingListDAO.save(Objects.requireNonNull(getContext()), stringArrayList);
         });
-
-        btnNavFrag1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Home", Toast.LENGTH_SHORT).show();
-
-                ((MainActivity) Objects.requireNonNull(getActivity())).setViewPager(0);
-            }
+        //Returns back to Home
+        btnNavFrag1.setOnClickListener(view1 -> {
+            ((MainActivity) Objects.requireNonNull(getActivity())).setViewPager(0);
         });
-
-        mShoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mAdapter.remove(mAdapter.getItem(position));
-                stringArrayList.remove(position);
-                mAdapter.notifyDataSetChanged();
-                ShoppingListDAO.save(Objects.requireNonNull(getContext()), stringArrayList);
-            }
+        //Adds a Listener to remove the items from the list again
+        mShoppingList.setOnItemClickListener((parent, view12, position, id) -> {
+            mAdapter.remove(mAdapter.getItem(position));
+            stringArrayList.remove(position);
+            mAdapter.notifyDataSetChanged();
+            ShoppingListDAO.save(Objects.requireNonNull(getContext()), stringArrayList);
         });
         return view;
     }

@@ -1,23 +1,17 @@
 package com.ks.crowdcontrol.database;
 
-import android.content.Context;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
+
+/**
+ * Class to receive data from the database
+ */
 public class Database {
     private FirebaseFirestore db;
-
-    /**
-     * constructor
-     */
     public void getData() {
         db = FirebaseFirestore.getInstance();
 

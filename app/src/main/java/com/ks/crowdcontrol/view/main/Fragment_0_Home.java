@@ -18,20 +18,21 @@ import com.ks.crowdcontrol.R;
 
 import java.util.Objects;
 
+/**
+ * Home Fragment. This class handles the Start Page.
+ */
 public class Fragment_0_Home extends Fragment {
     private static final String TAG = "Fragment_Home";
-
-    private Button btnNavFrag1;
-    private Button btnNavFrag2;
-    private Button btnNavFrag3;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        //Shows the View
         View view  = inflater.inflate(R.layout.fragment_0_home, container, false);
-        btnNavFrag1 = (Button) view.findViewById(R.id.btnNavFrag1);
-        btnNavFrag2 = (Button) view.findViewById(R.id.btnNavFrag2);
-        btnNavFrag3 = (Button) view.findViewById(R.id.btnNavFrag3);
+        //Creates the buttons to swap to the different pages.
+        Button btnNavFrag1 = (Button) view.findViewById(R.id.btnNavFrag1);
+        Button btnNavFrag2 = (Button) view.findViewById(R.id.btnNavFrag2);
+        Button btnNavFrag3 = (Button) view.findViewById(R.id.btnNavFrag3);
         Log.d(TAG, "onCreateView: started.");
 
         btnNavFrag1.setOnClickListener(view1 -> {
@@ -44,7 +45,7 @@ public class Fragment_0_Home extends Fragment {
             Toast.makeText(getActivity(), "Going to Shopping List", Toast.LENGTH_SHORT).show();
             ((MainActivity) Objects.requireNonNull(getActivity())).setViewPager(2);
         });
-
+        //Creates a Dialog to show the information about the project
         btnNavFrag3.setOnClickListener(view13 -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
             alertDialogBuilder.setMessage(R.string.information_dialog_text);

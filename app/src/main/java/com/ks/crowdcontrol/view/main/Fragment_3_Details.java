@@ -22,20 +22,15 @@ import com.ks.crowdcontrol.R;
 import com.ks.crowdcontrol.database.SupermarketDTO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class Fragment_3_Details extends Fragment {
     private static final String TAG = "Fragment_Home";
 
-    private Button btnNavFrag1;
-    private LineChart chart;
-    private SupermarketDTO currentSupermarketDTO;
-    private TextView TVPersonCount, TVExpectedWaitingTime, TVTitle;
-
-
+    /**
+     * Class showing and handling the Data from the AI
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -43,16 +38,16 @@ public class Fragment_3_Details extends Fragment {
         Log.d(TAG, "onCreateView: started.");
         //View Setup
         View view = inflater.inflate(R.layout.fragment_3_details, container, false);
-        btnNavFrag1 = (Button) view.findViewById(R.id.btnNavFrag1);
-        TVPersonCount = view.findViewById(R.id.tV_person_count);
-        TVExpectedWaitingTime = view.findViewById(R.id.tV_expected_wait_time);
-        TVTitle = view.findViewById(R.id.tV_detail_title);
-        chart = view.findViewById(R.id.chart);
+        Button btnNavFrag1 = (Button) view.findViewById(R.id.btnNavFrag1);
+        TextView TVPersonCount = view.findViewById(R.id.tV_person_count);
+        TextView TVExpectedWaitingTime = view.findViewById(R.id.tV_expected_wait_time);
+        TextView TVTitle = view.findViewById(R.id.tV_detail_title);
+        LineChart chart = view.findViewById(R.id.chart);
         //Button Setup
         btnNavFrag1.setOnClickListener(view1 -> {
             ((MainActivity) Objects.requireNonNull(getActivity())).setViewPager(1);
         });
-        currentSupermarketDTO = ((MainActivity) Objects.requireNonNull(getActivity())).getSupermarketDetailsID();
+        SupermarketDTO currentSupermarketDTO = ((MainActivity) Objects.requireNonNull(getActivity())).getSupermarketDetailsID();
         if (currentSupermarketDTO != null) {
             //Text View Setup
             TVPersonCount.setText(new StringBuilder().append(currentSupermarketDTO.getCurrent_customers()).append("/").append(currentSupermarketDTO.getMax_customers()).append(" möglichen Kunden").toString());
@@ -65,7 +60,7 @@ public class Fragment_3_Details extends Fragment {
 
             //Chart Setup
             List<Entry> entries = new ArrayList<>();
-            //Map which contains Data from Supermarket
+            //ArrayList which contains Data from Supermarket
             int[] myNum = new int[24];
             ArrayList testArray= currentSupermarketDTO.getChartData();
             int count = 0;
@@ -74,13 +69,11 @@ public class Fragment_3_Details extends Fragment {
                 count++;
             }
 
-            Log.wtf("SupermarketDTO", currentSupermarketDTO.toString());
-
             for (int i = 0; i < 24; i++) {
                 if (myNum[i] != 0)
                     entries.add(new Entry(i, myNum[i]));
             }
-
+            //Shows Chart
             LineDataSet dataSet = new LineDataSet(entries, currentSupermarketDTO.getName());
             dataSet.setColor(Color.BLUE);
             dataSet.setValueTextColor(Color.BLACK);

@@ -15,6 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -89,6 +93,24 @@ public class Fragment_3_Details extends Fragment {
             dataSet.setValueTextColor(Color.BLACK);
             LineData lineData = new LineData(dataSet);
             chart.setData(lineData);
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setAxisMinimum(0f);
+            YAxis rightAxis = chart.getAxisRight();
+            rightAxis.setAxisMinimum(0f);
+
+            Legend l = chart.getLegend();
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+            l.setOrientation(Legend.LegendOrientation.VERTICAL);
+            l.setDrawInside(true);
+            l.setYOffset(0f);
+            l.setXOffset(10f);
+            l.setYEntrySpace(0f);
+            l.setTextSize(8f);
+            Description desc = new Description();
+            desc.setYOffset(20f);
+            desc.setText("durchschnittliche Wartezeit");
+            chart.setDescription(desc);
             chart.invalidate();
         } else {
             Toast.makeText(getContext(), "No Supermarket available", Toast.LENGTH_SHORT).show();

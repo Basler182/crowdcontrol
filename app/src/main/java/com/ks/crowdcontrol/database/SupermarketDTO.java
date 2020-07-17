@@ -32,9 +32,9 @@ public class SupermarketDTO {
     private String city;
     private String zipCode;
     //Amount of people allowed to enter
-    private int current_customers;
+    private long current_customers;
     //People currently inside the supermarket
-    private int max_customers;
+    private long max_customers;
     //Coordinates of the supermarket
     private double latitude, longitude;
     //Supermarket Type means if its a supermarket or medical care shop
@@ -99,15 +99,15 @@ public class SupermarketDTO {
         this.zipCode = zipCode;
     }
 
-    public int getCurrent_customers() {
-        return current_customers;
+    public long getCurrent_customers() {
+        return this.current_customers;
     }
 
     public void setCurrent_customers(int current_customers) {
         this.current_customers = current_customers;
     }
 
-    public int getMax_customers() {
+    public long getMax_customers() {
         return max_customers;
     }
 
@@ -172,6 +172,9 @@ public class SupermarketDTO {
             longitude = geoPoint.getLongitude();
         }
         type = Type.GROCERIES;
+
+        current_customers = (long) documentSnapshot.get("current_customers");
+        max_customers = (long) documentSnapshot.get("max_customers");
     }
 
     public String getShortAddress() {

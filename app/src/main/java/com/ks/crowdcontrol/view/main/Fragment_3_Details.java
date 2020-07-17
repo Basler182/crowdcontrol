@@ -1,5 +1,6 @@
 package com.ks.crowdcontrol.view.main;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class Fragment_3_Details extends Fragment {
     /**
      * Class showing and handling the Data from the AI
      */
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -61,17 +63,25 @@ public class Fragment_3_Details extends Fragment {
             //Chart Setup
             List<Entry> entries = new ArrayList<>();
             //ArrayList which contains Data from Supermarket
-            int[] myNum = new int[24];
-            ArrayList testArray= currentSupermarketDTO.getChartData();
+            int[] myNum = new int[1440];
+            ArrayList testArray = currentSupermarketDTO.getChartData();
             int count = 0;
-            for(Object num : testArray){
+            for (Object num : testArray) {
                 myNum[count] = Integer.parseInt(num.toString());
                 count++;
             }
-
-            for (int i = 0; i < 24; i++) {
-                if (myNum[i] != 0)
-                    entries.add(new Entry(i, myNum[i]));
+            int currentTime = 8;
+            int sum = 0;
+            while (currentTime < 20) {
+                int j = currentTime * 60;
+                while (j < (currentTime + 1) * 60) {
+                    sum += myNum[j];
+                    j++;
+                }
+                sum = sum / 60;
+                entries.add(new Entry(currentTime, sum));
+                sum = 0;
+                currentTime++;
             }
             //Shows Chart
             LineDataSet dataSet = new LineDataSet(entries, currentSupermarketDTO.getName());

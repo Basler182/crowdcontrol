@@ -1,6 +1,5 @@
 package com.ks.crowdcontrol.view.main;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
